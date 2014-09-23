@@ -73,6 +73,29 @@
 											<button class="btn btn-info">
 												Detalhes <span class="glyphicon glyphicon-eye-open"></span>
 											</button>
+											<a href="#myModal" class="btn btn-info" data-toggle="modal">Agendar Consulta</a>
+											<div id="myModal" class="modal fade">
+										        <div class="modal-dialog">
+										            <div class="modal-content">
+										                <div class="modal-header">
+										                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+										                    <h4 class="modal-title">Agendar Consulta</h4>
+										                </div>
+										                <form:form servletRelativeAction="agendar" method="POST" >
+											                <div class="modal-body">
+											                    <div class="col-sm-12">
+																	<label>Data</label><input type="date" name="data">		
+																	<label>Hora</label><input type="time" name="hora">
+											                	</div>
+												                <div class="modal-footer">
+												                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+												                    <button type="button" class="btn btn-info">Agendar</button>
+												                </div>
+											            	</div>
+											            </form:form>	
+										        	</div>
+									    		</div>
+									    	</div>
 									</a></td>
 								</tr>
 							</c:forEach>
