@@ -70,9 +70,9 @@ public class NutricaoController {
 	}
 	
 	@RequestMapping(value = "/agendar_buscar", method = RequestMethod.POST)
-	public String buscarPessoa() {
-
-		return "/nutricao/agendar_consulta";
+	public String buscarPessoa(@RequestParam("identificar") Long id) {
+		System.out.println("idididi = "+id);
+		return "nutricao/buscar";
 	}	
 	
 	@RequestMapping(value = {"/{id}/detalhes"})
