@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.ufc.quixada.npi.sisat.enumerator.Classificacao;
+import br.com.ufc.quixada.npi.sisat.model.Agendamento;
 import br.com.ufc.quixada.npi.sisat.model.ConsultaNutricional;
 import br.com.ufc.quixada.npi.sisat.model.Paciente;
 import br.com.ufc.quixada.npi.sisat.model.Pessoa;
@@ -45,15 +46,34 @@ public class NutricaoController {
 		return "nutricao/buscar";
 	}
 	
+	@RequestMapping(value = {"/agendar_consulta"}, method = RequestMethod.GET)
+	public String agendamento(Model model) {
+		model.addAttribute("agendamento", new Agendamento());
+		model.addAttribute("paciente", new Pessoa());
+		return "nutricao/agendar_consulta";
+	}
+	
+	@RequestMapping(value = {"/agendar"}, method = RequestMethod.POST)
+	public String agendamento(@ModelAttribute("paciente") Pessoa paciente, @ModelAttribute("agendamento") Agendamento agendamento ) {
+		System.out.println(paciente.toString());
+		return "nutricao/agendar_consulta";
+	}
+	
 	@RequestMapping(value = "/buscar", method = RequestMethod.POST)
-	public String buscarPaciente(@RequestParam("tipoPesquisa") String tipoPesquisa, @RequestParam("campo") String campo, ModelMap map) {
+	public String buscarPaciente(@RequestParam("tipoPesquisa") String tipoPesquisa, @RequestParam("campo") String campo, Model model) {
 		if(tipoPesquisa.equals("cpf")){
-			map.addAttribute("pessoas", servicePessoa.getPessoasByCpf(campo));
+			model.addAttribute("pessoas", servicePessoa.getPessoasByCpf(campo));
 		}else if(tipoPesquisa.equals("nome")){
-			map.addAttribute("pessoas", servicePessoa.getPessoasByNome(campo));
+			model.addAttribute("pessoas", servicePessoa.getPessoasByNome(campo));
 		}
 		return "/nutricao/buscar";
 	}
+	
+	@RequestMapping(value = "/agendar_buscar", method = RequestMethod.POST)
+	public String buscarPessoa() {
+
+		return "/nutricao/agendar_consulta";
+	}	
 	
 	@RequestMapping(value = {"/{id}/detalhes"})
 	public String getDetalhes(Pessoa p, @PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes){

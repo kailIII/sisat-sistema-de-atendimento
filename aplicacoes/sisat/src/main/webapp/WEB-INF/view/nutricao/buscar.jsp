@@ -92,7 +92,7 @@
 												                    <button type="button" class="btn btn-info">Agendar</button>
 												                </div>
 											            	</div>
-											            </form:form>	
+											            </form:form>
 										        	</div>
 									    		</div>
 									    	</div>
