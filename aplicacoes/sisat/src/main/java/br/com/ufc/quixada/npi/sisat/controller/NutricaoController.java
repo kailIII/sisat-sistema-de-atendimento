@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,7 +69,14 @@ public class NutricaoController {
 	}
 	
 	@RequestMapping(value = "/agendar_buscar", method = RequestMethod.POST)
-	public String buscarPessoa(@RequestParam("identificar") Long id) {
+	public String buscarPessoa(@RequestParam("identificar") Long id, @ModelAttribute("agendamento") Agendamento agendamento, @ModelAttribute("paciente") Pessoa paciente) {
+		if(servicePaciente.find(Paciente.class, id)==null){
+			Paciente p = new Paciente();
+			p.setPessoa(servicePessoa.find(Pessoa.class, id));
+			servicePaciente.save(p);
+		} else{
+			
+		}
 		System.out.println("idididi = "+id);
 		return "nutricao/buscar";
 	}	

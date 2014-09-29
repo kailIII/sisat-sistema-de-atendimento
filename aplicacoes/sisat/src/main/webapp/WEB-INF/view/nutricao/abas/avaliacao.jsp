@@ -21,12 +21,12 @@
 
 <div class="col-sm-12">
 	<label>Alterações Gastrointestinais</label> <br/>
-	<div class="col-sm-2"><input type="checkbox" name="disfagia" value="true"/><label>Disfagia</label></div>
-	<div class="col-sm-2"><input type="checkbox" name="pirose" value="true"/><label>Pirose</label></div>
-	<div class="col-sm-2"><input type="checkbox" name="nausea" value="true"/><label>Náusea</label></div>
-	<div class="col-sm-2"><input type="checkbox" name="vomito" value="true"/><label>Vômitos</label></div>
-	<div class="col-sm-2"><input type="checkbox" name="diarreia" value="true"/><label>Diarreia</label></div>
-	<div class="col-sm-2"><input type="checkbox" name="constipacao" value="true"/><label>Constipação</label></div>
+	<div class="col-sm-2"><input type="checkbox" name="disfagia"/><label>Disfagia</label></div>
+	<div class="col-sm-2"><input type="checkbox" name="pirose"/><label>Pirose</label></div>
+	<div class="col-sm-2"><input type="checkbox" name="nausea"/><label>Náusea</label></div>
+	<div class="col-sm-2"><input type="checkbox" name="vomito"/><label>Vômitos</label></div>
+	<div class="col-sm-2"><input type="checkbox" name="diarreia"/><label>Diarreia</label></div>
+	<div class="col-sm-2"><input type="checkbox" name="constipacao"/><label>Constipação</label></div>
 	
 	<div class="col-sm-12" style="cursor: pointer;">
 		<input class="col-sm-0" type="checkbox" name="mastigacao" id="checkMastigacao" onclick="habilitar();"/><label>Mastigação</label>

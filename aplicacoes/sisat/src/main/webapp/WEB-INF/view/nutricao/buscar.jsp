@@ -90,6 +90,11 @@
 			                <form:form id="form" servletRelativeAction="agendar_buscar" method="POST" >
 			                	<input type="hidden" name="identificar" value="" >
 				                <div class="modal-body">
+				                    <table class="table">
+							            <tr>
+							        		<td><label>Nome:</label> ${pessoa.nome }</td>
+										</tr>
+    								</table>
 				                    <div class="col-sm-12">
 										<label>Data</label><input type="date" name="data">		
 										<label>Hora</label><input type="time" name="hora">
