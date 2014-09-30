@@ -92,7 +92,14 @@
 				                <div class="modal-body">
 				                    <table class="table">
 							            <tr>
-							        		<td><label>Nome:</label> ${pessoa.nome }</td>
+							        		<td><label>Nome:</label> <label>${pessoa.nome }</label></td>
+							        		<c:forEach var="pessoa" items="${pessoas}">
+												<tr class="linha">
+													<td><a href="">${pessoa.nome}</a></td>
+													<td>${pessoa.nome}</td>
+													<td>${pessoa.cpf}</td>
+												</tr>
+											</c:forEach>
 										</tr>
     								</table>
 				                    <div class="col-sm-12">

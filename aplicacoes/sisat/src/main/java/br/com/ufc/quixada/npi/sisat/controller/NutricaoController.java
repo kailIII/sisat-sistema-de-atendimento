@@ -75,7 +75,10 @@ public class NutricaoController {
 			p.setPessoa(servicePessoa.find(Pessoa.class, id));
 			servicePaciente.save(p);
 		} else{
-			
+			servicePaciente.find(Paciente.class, id).getPessoa();
+			Paciente p = servicePaciente.find(Paciente.class, id);
+			agendamento(paciente, agendamento);
+			servicePaciente.save(p);
 		}
 		System.out.println("idididi = "+id);
 		return "nutricao/buscar";
