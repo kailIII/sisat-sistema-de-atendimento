@@ -16,15 +16,16 @@ public class Paciente implements Serializable {
 	@JoinColumn(name = "id")
 	private Pessoa pessoa;
 	
+	
 	private double altura;
 
 	@OneToMany(mappedBy="paciente")
 	private List<ConsultaNutricional> consultas;
 	
-	/*
+	
 	@OneToMany(mappedBy="paciente")
 	private List<Agendamento> agendamentos;
-	 */	
+	
 	
 	public Pessoa getPessoa() {
 		return pessoa;
@@ -43,5 +44,11 @@ public class Paciente implements Serializable {
 	}
 	public void setConsultas(List<ConsultaNutricional> consultas) {
 		this.consultas = consultas;
-	} 
+	}
+	public List<Agendamento> getAgendamentos() {
+		return agendamentos;
+	}
+	public void setAgendamentos(List<Agendamento> agendamentos) {
+		this.agendamentos = agendamentos;
+	}
 }

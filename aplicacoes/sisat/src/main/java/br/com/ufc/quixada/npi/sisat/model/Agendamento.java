@@ -9,10 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.annotations.ManyToAny;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import br.com.ufc.quixada.npi.sisat.enumerator.Classificacao;
 
 @Entity
 public class Agendamento {
@@ -20,6 +17,10 @@ public class Agendamento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@ManyToOne
+	@JoinColumn(name="paciente_id")
+	private Paciente paciente;
 	
 	@DateTimeFormat
 	private Date data;
@@ -36,7 +37,14 @@ public class Agendamento {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	public Paciente getPaciente() {
+		return paciente;
+	}
 
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
+	}
 	public Date getData() {
 		return data;
 	}

@@ -18,6 +18,7 @@ import br.com.ufc.quixada.npi.sisat.model.Agendamento;
 import br.com.ufc.quixada.npi.sisat.model.ConsultaNutricional;
 import br.com.ufc.quixada.npi.sisat.model.Paciente;
 import br.com.ufc.quixada.npi.sisat.model.Pessoa;
+import br.com.ufc.quixada.npi.sisat.service.AgendamentoService;
 import br.com.ufc.quixada.npi.sisat.service.ConsultaNutricionalService;
 import br.com.ufc.quixada.npi.sisat.service.PacienteService;
 import br.com.ufc.quixada.npi.sisat.service.PessoaService;
@@ -34,6 +35,9 @@ public class NutricaoController {
 	
 	@Inject
 	private ConsultaNutricionalService consultaNutricionalService;
+	
+	@Inject
+	private AgendamentoService serviceAgendamento;
 
 	@RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
 	public String index() {
@@ -69,17 +73,18 @@ public class NutricaoController {
 	}
 	
 	@RequestMapping(value = "/agendar_buscar", method = RequestMethod.POST)
-	public String buscarPessoa(@RequestParam("identificar") Long id, @ModelAttribute("agendamento") Agendamento agendamento, @ModelAttribute("paciente") Pessoa paciente) {
-		if(servicePaciente.find(Paciente.class, id)==null){
-			Paciente p = new Paciente();
-			p.setPessoa(servicePessoa.find(Pessoa.class, id));
-			servicePaciente.save(p);
-		} else{
-			servicePaciente.find(Paciente.class, id).getPessoa();
-			Paciente p = servicePaciente.find(Paciente.class, id);
-			agendamento(paciente, agendamento);
-			servicePaciente.save(p);
-		}
+	public String buscarPessoa(@RequestParam("identificar") Long id, @ModelAttribute("agendamento") Agendamento agendamento) {
+		Paciente paciente = servicePaciente.find(Paciente.class, id);
+		
+		if(paciente == null){
+			paciente = new Paciente();
+			paciente.setPessoa(servicePessoa.find(Pessoa.class, id));
+			servicePaciente.save(paciente);
+		} 
+		
+		agendamento.setPaciente(paciente);
+		serviceAgendamento.save(agendamento);
+		
 		System.out.println("idididi = "+id);
 		return "nutricao/buscar";
 	}	
