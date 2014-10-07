@@ -27,6 +27,7 @@
 			<c:if test="${not empty info }">
 				<div class="alert alert-info" role="alert">${info}</div>
 			</c:if>
+		<label>aaa = ${agendamento }</label>
 
 			<form:form id="buscarPacienteForm" role="form"
 				servletReltiveAction="/nutricao/buscar" method="POST"
@@ -87,24 +88,12 @@
 			                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			                    <h4 class="modal-title">Agendar Consulta</h4>
 			                </div>
-			                <form:form id="form" servletRelativeAction="agendar_buscar" method="POST" >
+			                <form:form id="form" servletRelativeAction="agendar_buscar" method="POST" modelAttribute="agendamento" >
 			                	<input type="hidden" name="identificar" value="" >
 				                <div class="modal-body">
-				                    <table class="table">
-							            <tr>
-							        		<td><label>Nome:</label> <label>${pessoa.nome }</label></td>
-							        		<c:forEach var="pessoa" items="${pessoas}">
-												<tr class="linha">
-													<td><a href="">${pessoa.nome}</a></td>
-													<td>${pessoa.nome}</td>
-													<td>${pessoa.cpf}</td>
-												</tr>
-											</c:forEach>
-										</tr>
-    								</table>
 				                    <div class="col-sm-12">
-										<label>Data</label><input type="date" name="data">		
-										<label>Hora</label><input type="time" name="hora">
+										<label>Data</label><input type="date" name="data" value="">		
+										<label>Hora</label><input type="time" name="hora" value="">
 				                	</div>
 					                <div class="modal-footer">
 					                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

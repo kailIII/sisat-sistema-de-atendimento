@@ -1,8 +1,12 @@
 package br.com.ufc.quixada.npi.sisat.controller;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,8 +22,8 @@ import br.com.ufc.quixada.npi.sisat.model.Agendamento;
 import br.com.ufc.quixada.npi.sisat.model.ConsultaNutricional;
 import br.com.ufc.quixada.npi.sisat.model.Paciente;
 import br.com.ufc.quixada.npi.sisat.model.Pessoa;
-import br.com.ufc.quixada.npi.sisat.service.AgendamentoService;
 import br.com.ufc.quixada.npi.sisat.service.ConsultaNutricionalService;
+import br.com.ufc.quixada.npi.sisat.service.GenericService;
 import br.com.ufc.quixada.npi.sisat.service.PacienteService;
 import br.com.ufc.quixada.npi.sisat.service.PessoaService;
 
@@ -37,7 +41,11 @@ public class NutricaoController {
 	private ConsultaNutricionalService consultaNutricionalService;
 	
 	@Inject
-	private AgendamentoService serviceAgendamento;
+	private GenericService<Agendamento> serviceAgendamento;
+	
+	
+	//@Inject
+	//private AgendamentoService serviceAgendamento;
 
 	@RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
 	public String index() {
@@ -45,7 +53,8 @@ public class NutricaoController {
 	}
 	
 	@RequestMapping(value = {"/buscar"}, method = RequestMethod.GET)
-	public String buscarPaciente(Model model) {		
+	public String buscarPaciente(Model model) {	
+		model.addAttribute("agendamento", new Agendamento());
 		return "nutricao/buscar";
 	}
 	
@@ -69,13 +78,15 @@ public class NutricaoController {
 		}else if(tipoPesquisa.equals("nome")){
 			model.addAttribute("pessoas", servicePessoa.getPessoasByNome(campo));
 		}
+		model.addAttribute("agendamento", new Agendamento());
 		return "/nutricao/buscar";
 	}
 	
 	@RequestMapping(value = "/agendar_buscar", method = RequestMethod.POST)
-	public String buscarPessoa(@RequestParam("identificar") Long id, @ModelAttribute("agendamento") Agendamento agendamento) {
+	public String buscarPessoa(@RequestParam("identificar") Long id, @Valid @ModelAttribute("agendamento") Agendamento agendamento, BindingResult result) {
+		//agendamento.setData(new Date());
 		Paciente paciente = servicePaciente.find(Paciente.class, id);
-		
+		System.out.println("oioioioioio" + agendamento.getHora().toString());
 		if(paciente == null){
 			paciente = new Paciente();
 			paciente.setPessoa(servicePessoa.find(Pessoa.class, id));
@@ -86,7 +97,7 @@ public class NutricaoController {
 		serviceAgendamento.save(agendamento);
 		
 		System.out.println("idididi = "+id);
-		return "nutricao/buscar";
+		return "redirect:/nutricao/buscar";
 	}	
 	
 	@RequestMapping(value = {"/{id}/detalhes"})
