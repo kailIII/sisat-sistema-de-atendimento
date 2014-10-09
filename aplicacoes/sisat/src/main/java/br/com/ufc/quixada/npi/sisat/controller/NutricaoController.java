@@ -42,10 +42,6 @@ public class NutricaoController {
 	
 	@Inject
 	private GenericService<Agendamento> serviceAgendamento;
-	
-	
-	//@Inject
-	//private AgendamentoService serviceAgendamento;
 
 	@RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
 	public String index() {
@@ -84,19 +80,14 @@ public class NutricaoController {
 	
 	@RequestMapping(value = "/agendar_buscar", method = RequestMethod.POST)
 	public String buscarPessoa(@RequestParam("identificar") Long id, @Valid @ModelAttribute("agendamento") Agendamento agendamento, BindingResult result) {
-		//agendamento.setData(new Date());
 		Paciente paciente = servicePaciente.find(Paciente.class, id);
-		System.out.println("oioioioioio" + agendamento.getHora().toString());
 		if(paciente == null){
 			paciente = new Paciente();
 			paciente.setPessoa(servicePessoa.find(Pessoa.class, id));
 			servicePaciente.save(paciente);
 		} 
-		
 		agendamento.setPaciente(paciente);
 		serviceAgendamento.save(agendamento);
-		
-		System.out.println("idididi = "+id);
 		return "redirect:/nutricao/buscar";
 	}	
 	
@@ -110,7 +101,6 @@ public class NutricaoController {
 		model.addAttribute("pessoa", pessoa);
 		return "nutricao/detalhes";
 	}
-	
 	
 	@RequestMapping(value = {"/consulta"}, method = RequestMethod.GET)
 	public String consulta(Model model, HttpSession session) {
@@ -161,4 +151,3 @@ public class NutricaoController {
 		return "nutricao/consulta";
 	}
 }
-

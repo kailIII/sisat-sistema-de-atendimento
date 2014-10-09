@@ -16,8 +16,6 @@
 
 	<jsp:include page="../modulos/header.jsp" />
 
-
-
 	<div class="container">
 		<div class="buscar-paciente" align="left">
 
@@ -27,7 +25,6 @@
 			<c:if test="${not empty info }">
 				<div class="alert alert-info" role="alert">${info}</div>
 			</c:if>
-		<label>aaa = ${agendamento }</label>
 
 			<form:form id="buscarPacienteForm" role="form"
 				servletReltiveAction="/nutricao/buscar" method="POST"
@@ -38,7 +35,6 @@
 				</select>
 				<input id="campo" name="campo" cssClass="form-control"
 					placeholder="" size="40" required="required" autofocus="true"/>
-				</td>
 				<button class="btn btn-primary" name="submit" type="submit" class="btn btn-primary"
 					value="Buscar" >
 					 Buscar
@@ -81,47 +77,52 @@
 						</tbody>
 					</table>
 					
-<div id="myModal" class="modal fade">
-       <div class="modal-dialog">
-			            <div class="modal-content">
-			                <div class="modal-header">
-			                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			                    <h4 class="modal-title">Agendar Consulta</h4>
-			                </div>
-			                <form:form id="form" servletRelativeAction="agendar_buscar" method="POST" modelAttribute="agendamento" >
-			                	<input type="hidden" name="identificar" value="" >
-				                <div class="modal-body">
-				                    <div class="col-sm-12">
-										<label>Data</label><input type="date" name="data" value="">		
-										<label>Hora</label><input type="time" name="hora" value="">
-				                	</div>
-					                <div class="modal-footer">
-					                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-					                    <input type="submit" class="btn btn-info" value="Agendar"/>
-					                </div>
-				            	</div>
-				            </form:form>
-			        	</div>
-		    		</div>
-		    	</div>
+					<div id="myModal" class="modal fade">
+						<div class="modal-dialog">
+							<div class="modal-content">
+				                <div class="modal-header">
+				                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				                    <h4 class="modal-title">Agendar Consulta</h4>
+				                </div>
+				                <form:form id="form" servletRelativeAction="agendar_buscar" method="POST" modelAttribute="agendamento" >
+				                	<input type="hidden" name="identificar" value="" >
+					                <div class="modal-body">
+					                    <div class="col-sm-12">
+											<label>Data</label><input type="text" name="data" class="data" value="">		
+											<label>Hora</label><input type="time" name="hora" value="">
+					                	</div>
+						                <div class="modal-footer">
+						                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						                    <input type="submit" class="btn btn-info" value="Agendar"/>
+						                </div>
+					            	</div>
+					            </form:form>
 							</div>
+						</div>
+					</div>
+				</div>
 			</c:if>
 		</div>
 	</div>
-	<jsp:include page="../modulos/footer.jsp" />
 	
+	<jsp:include page="../modulos/footer.jsp" />
 
-<script type="text/javascript">
+<script type="text/javascript"> 
 $(document).ready(function(){
 	$("a#m").click(function(){
 		 var ident = $(this).data("ident");
 		 $("#form input[type='hidden']").val(ident);
 	});
+	
+	$("input.data").datepicker({
+		format : "dd/mm/yyyy",
+		todayBtn : "linked",
+		autoclose : true,
+		language : "pt-BR",
+		todayHighlight : true,
+	});
 });
-
 </script>
 
-
 </body>
-
 </html>
