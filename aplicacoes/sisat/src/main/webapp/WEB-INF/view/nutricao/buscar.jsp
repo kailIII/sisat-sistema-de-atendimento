@@ -79,7 +79,7 @@
 				                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				                    <h4 class="modal-title">Agendar Consulta</h4>
 				                </div>
-				                <form:form id="form" servletRelativeAction="agendar_buscar" method="POST" modelAttribute="agendamento" >
+				                <form:form id="form" servletRelativeAction="agendar_buscar" modelAttribute="agendamento" >
 				                	<input type="hidden" name="identificar" value="" >
 					                <div class="modal-body">
 					                    <div class="col-sm-12">

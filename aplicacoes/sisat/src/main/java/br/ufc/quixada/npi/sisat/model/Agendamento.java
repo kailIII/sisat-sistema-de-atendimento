@@ -33,7 +33,7 @@ public class Agendamento {
 	private Date data;
 	
 	@Temporal(TemporalType.TIME)
-	@DateTimeFormat(pattern = "hh:mm")
+	@DateTimeFormat(pattern = "HH:mm")
 	private Date hora;
 	
 	private int status;

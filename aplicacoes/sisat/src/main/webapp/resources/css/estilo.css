@@ -23,6 +23,10 @@ div.row {
 	color: #0064A1 !important;
 }
 
+.data{
+	z-index: 9999 !important;
+}
+
 #footer{
 	position: fixed;
     bottom: 0px;

@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -63,19 +64,6 @@ public class NutricaoController {
 		return "nutricao/buscar";
 	}
 	
-	@RequestMapping(value = {"/agendar_consulta"}, method = RequestMethod.GET)
-	public String agendamento(Model model) {
-		model.addAttribute("agendamento", new Agendamento());
-		model.addAttribute("paciente", new Pessoa());
-		return "nutricao/agendar_consulta";
-	}
-	
-	@RequestMapping(value = {"/agendar"}, method = RequestMethod.POST)
-	public String agendamento(@ModelAttribute("paciente") Pessoa paciente, @ModelAttribute("agendamento") Agendamento agendamento ) {
-		System.out.println(paciente.toString());
-		return "nutricao/agendar_consulta";
-	}
-	
 	@RequestMapping(value = "/buscar", method = RequestMethod.POST)
 	public String buscarPaciente(@RequestParam("tipoPesquisa") String tipoPesquisa, @RequestParam("campo") String campo, ModelMap map, RedirectAttributes redirectAttributes) {
 		List<Pessoa> pessoas = null;
@@ -94,6 +82,18 @@ public class NutricaoController {
 		return "/nutricao/buscar";
 	}
 	
+	@RequestMapping(value = {"{id}/agendar_consulta"}, method = RequestMethod.GET)
+	public String agendamento(Model model, @PathVariable("id") Long id) {
+		model.addAttribute("agendamento", new Agendamento());
+		model.addAttribute("paciente", new Pessoa());
+		return "nutricao/agendar_consulta";
+	}
+	@RequestMapping(value = {"{id}/age"}, method = RequestMethod.GET)
+	public String agendamentoEdita(Model model, @PathVariable("id") Long id) {
+		model.addAttribute("agendamento", serviceAgendamento.find(Agendamento.class, id));
+		return "nutricao/agendar_consulta";
+	}
+	
 	@RequestMapping(value = "/agendar_buscar", method = RequestMethod.POST)
 	public String buscarPessoa(@RequestParam("identificar") Long id, @Valid @ModelAttribute("agendamento") Agendamento agendamento, BindingResult result) {
 		Paciente paciente = pacienteService.find(Paciente.class, id);
@@ -105,7 +105,27 @@ public class NutricaoController {
 		agendamento.setPaciente(paciente);
 		serviceAgendamento.save(agendamento);
 		return "redirect:/nutricao/buscar";
-	}	
+	}
+	
+	/*
+	@RequestMapping(value = {"/agendar"}, method = RequestMethod.POST)
+	public String agendamento(@ModelAttribute("paciente") Pessoa paciente, @ModelAttribute("agendamento") Agendamento agendamento ) {
+		System.out.println(paciente.toString());
+		return "nutricao/agendar_consulta";
+	}
+	*/
+	
+	/*
+	@RequestMapping(value = {"/{id}/editarAgendamento"}, method = RequestMethod.GET)
+	public String editarAgendamento(){
+		
+	}
+	*/
+	
+//	@RequestMapping(value = {"/editarAgendamento"}, method = RequestMethod.POST)
+//	public String editarAgendamento(@ModelAttribute("agendamento") Agendamento agendamento, @RequestParam("id") Long id){
+//		
+//	}
 	
 	@RequestMapping(value = {"/{id}/detalhes"})
 	public String getDetalhes(Pessoa p, @PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes){
