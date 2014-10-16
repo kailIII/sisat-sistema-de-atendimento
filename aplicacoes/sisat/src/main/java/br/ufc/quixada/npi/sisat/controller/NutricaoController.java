@@ -52,6 +52,9 @@ public class NutricaoController {
 	
 	@Inject
 	private GenericService<Alimentacao> alimentacaoService;
+	
+	@Inject
+	private GenericService<Agendamento> agendamentoService;
 
 	@RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
 	public String index() {
@@ -114,18 +117,19 @@ public class NutricaoController {
 		return "nutricao/agendar_consulta";
 	}
 	*/
-	
-	/*
+
 	@RequestMapping(value = {"/{id}/editarAgendamento"}, method = RequestMethod.GET)
-	public String editarAgendamento(){
-		
+	public String editarAgendamento(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes){
+		Agendamento agendamento = agendamentoService.find(Agendamento.class, id);
+		model.addAttribute("agendamento", agendamento);
+		return "/nutricao/editarAgendamento";
 	}
-	*/
 	
-//	@RequestMapping(value = {"/editarAgendamento"}, method = RequestMethod.POST)
-//	public String editarAgendamento(@ModelAttribute("agendamento") Agendamento agendamento, @RequestParam("id") Long id){
-//		
-//	}
+	@RequestMapping(value = {"/editarAgendamento"}, method = RequestMethod.POST)
+	public String editarAgendamento(@ModelAttribute("agendamento") Agendamento agendamento, @RequestParam("id") Long id){
+		agendamentoService.update(agendamento);
+		return "/nutricao/editarAgendamento";
+	}
 	
 	@RequestMapping(value = {"/{id}/detalhes"})
 	public String getDetalhes(Pessoa p, @PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes){

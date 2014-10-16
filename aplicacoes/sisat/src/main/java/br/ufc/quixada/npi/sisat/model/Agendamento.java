@@ -29,6 +29,7 @@ public class Agendamento {
 	private Paciente paciente;
 	
 	@NotNull
+	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date data;
 	
