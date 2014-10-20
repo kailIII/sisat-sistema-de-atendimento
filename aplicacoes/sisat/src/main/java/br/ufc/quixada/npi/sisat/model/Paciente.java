@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 import br.ufc.quixada.npi.sisat.model.Agendamento;
 
-
 @Entity
 public class Paciente implements Serializable {
 	@Id
@@ -18,7 +17,6 @@ public class Paciente implements Serializable {
 	@JoinColumn(name = "id")
 	private Pessoa pessoa;
 	
-	
 	private double altura;
 
 	@OneToMany(mappedBy="paciente")
@@ -28,7 +26,7 @@ public class Paciente implements Serializable {
 	@OneToMany(mappedBy="paciente")
 	private List<Agendamento> agendamentos;
 	
-	
+	//gets and sets
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
@@ -47,10 +45,33 @@ public class Paciente implements Serializable {
 	public void setConsultas(List<ConsultaNutricional> consultas) {
 		this.consultas = consultas;
 	}
+
 	public List<Agendamento> getAgendamentos() {
 		return agendamentos;
 	}
 	public void setAgendamentos(List<Agendamento> agendamentos) {
 		this.agendamentos = agendamentos;
+	}
+	
+	@Override
+	public String toString() {
+		return "Paciente [id=" + id + ", pessoa=" + pessoaToString() + ", consultas="
+				+ consultas + ", altura=" + altura + "]";
+	}
+
+	private String pessoaToString() {
+		return "Pessoa [id=" + id + ", login=" + pessoa.getLogin()
+				+ ", password=" + pessoa.getPassword() + ", papeis="
+				+ pessoa.getPapeis() + ", servidores=" + pessoa.getServidores()
+				+ ", cpf=" + pessoa.getCpf() + ", nome=" + pessoa.getNome()
+				+ ", email=" + pessoa.getEmail() + ", sexo=" + pessoa.getSexo()
+				+ ", dataNascimento=" + pessoa.getDataNascimento()
+				+ ", telefone=" + pessoa.getTelefone() + "]";
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

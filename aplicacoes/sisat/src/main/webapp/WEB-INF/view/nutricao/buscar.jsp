@@ -25,6 +25,10 @@
 			<c:if test="${not empty info }">
 				<div class="alert alert-info" role="alert">${info}</div>
 			</c:if>
+			<c:if test="${not empty success }">
+				<div class="alert alert-success" role="alert">${success}</div>
+			</c:if>
+			
 
 			<form:form id="buscarPacienteForm" role="form"
 				servletReltiveAction="/nutricao/buscar" method="POST"
@@ -53,7 +57,7 @@
 						<thead>
 							<tr>
 								<th>Nome</th>
-								<th>Ações</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -61,11 +65,22 @@
 								<tr class="linha">
 									<td><a href="<c:url value="/nutricao/${pessoa.id}/detalhes"></c:url>">${pessoa.nome}
 									</a></td>
-									<td><a id="detalhes" data-toggle="modal" href="${pessoa.id}/detalhes">
+								<td align="right">
+										<a id="detalhes" data-toggle="modal" href="${pessoa.id}/detalhes">
 											<button class="btn btn-info">
 												Detalhes <span class="glyphicon glyphicon-eye-open"></span>
 											</button></a>
 											<a href="/buscar.jsp#myModal" id="m" data-ident="${pessoa.id}" class="btn btn-info" data-toggle="modal">Agendar Consulta</a>
+										 
+											</button>
+											
+										</a>
+										<a id="consulta" data-toggle="modal" href="${pessoa.id}/realizar">
+											<button class="btn btn-info">
+												<span class="glyphicon glyphicon-plus"></span>
+												Consulta 
+											</button>
+										</a>
 									</td>
 								</tr>
 							</c:forEach>
