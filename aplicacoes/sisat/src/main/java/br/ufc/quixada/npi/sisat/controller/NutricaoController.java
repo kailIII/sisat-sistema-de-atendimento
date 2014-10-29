@@ -1,5 +1,6 @@
 package br.ufc.quixada.npi.sisat.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -91,11 +92,12 @@ public class NutricaoController {
 		model.addAttribute("paciente", new Pessoa());
 		return "nutricao/agendar_consulta";
 	}
-	@RequestMapping(value = {"{id}/age"}, method = RequestMethod.GET)
-	public String agendamentoEdita(Model model, @PathVariable("id") Long id) {
-		model.addAttribute("agendamento", serviceAgendamento.find(Agendamento.class, id));
-		return "nutricao/agendar_consulta";
-	}
+	
+//	@RequestMapping(value = {"{id}/age"}, method = RequestMethod.GET)
+//	public String agendamentoEdita(Model model, @PathVariable("id") Long id) {
+//		model.addAttribute("agendamento", serviceAgendamento.find(Agendamento.class, id));
+//		return "nutricao/agendar_consulta";
+//	}
 	
 	@RequestMapping(value = "/agendar_buscar", method = RequestMethod.POST)
 	public String buscarPessoa(@RequestParam("identificar") Long id, @Valid @ModelAttribute("agendamento") Agendamento agendamento, BindingResult result) {
@@ -131,6 +133,38 @@ public class NutricaoController {
 		return "/nutricao/editarAgendamento";
 	}
 	
+	//buscar agendamento	//IsmaelRS
+	@RequestMapping(value = {"/buscar_agendamento"}, method = RequestMethod.GET)
+	public String buscarAgendamento(Model model) {	
+		model.addAttribute("agendamento", new Agendamento());
+		return "nutricao/buscar_agendamento";
+	}
+	//buscar agendamento	//IsmaelRS
+	@RequestMapping(value = "/buscar_agendamento", method = RequestMethod.POST)
+	public String buscarAgendamento(@RequestParam("tipoPesquisa") String tipoPesquisa, @RequestParam("campo") String campo, ModelMap map, RedirectAttributes redirectAttributes) {
+		List<Pessoa> pessoas = null;
+		map.addAttribute("agendamento", new Agendamento());
+		if(tipoPesquisa.equals("cpf")){
+			pessoas = pessoaService.getPessoasByCpf(campo);
+		}else {
+			pessoas = pessoaService.getPessoasByNome(campo);
+		}
+		if(pessoas.isEmpty()){
+			redirectAttributes.addFlashAttribute("erro", "Paciente de " + tipoPesquisa + " " + campo + " não encontrado.");
+			return "redirect:/nutricao/buscar_agendamento";
+		}
+		List<Agendamento> agendamentos = new ArrayList<Agendamento>();
+		for (Pessoa pessoa : pessoas) {
+			if(pessoa.getPaciente() != null && !pessoa.getPaciente().getAgendamentos().isEmpty()){
+				agendamentos.addAll(pessoa.getPaciente().getAgendamentos());
+			}
+
+		}
+		System.out.println("agendamenstos: " + agendamentos.toString());
+		map.addAttribute("agendamentos", agendamentos); 
+		return "/nutricao/buscar_agendamento";
+	}
+
 	@RequestMapping(value = {"/{id}/detalhes"})
 	public String getDetalhes(Pessoa p, @PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes){
 		Pessoa pessoa = pessoaService.find(Pessoa.class, id);
