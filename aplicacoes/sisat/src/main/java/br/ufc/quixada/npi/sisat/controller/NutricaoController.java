@@ -1,6 +1,5 @@
 package br.ufc.quixada.npi.sisat.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -20,14 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufc.quixada.npi.service.GenericService;
+import br.ufc.quixada.npi.sisat.enumeration.Classificacao;
 import br.ufc.quixada.npi.sisat.model.Agendamento;
 import br.ufc.quixada.npi.sisat.model.Alimentacao;
 import br.ufc.quixada.npi.sisat.model.ConsultaNutricional;
 import br.ufc.quixada.npi.sisat.model.FrequenciaAlimentar;
+import br.ufc.quixada.npi.sisat.model.FrequenciaAlimentar.Refeicoes;
 import br.ufc.quixada.npi.sisat.model.Paciente;
 import br.ufc.quixada.npi.sisat.model.Pessoa;
-import br.ufc.quixada.npi.sisat.model.enumerator.Classificacao;
-import br.ufc.quixada.npi.sisat.model.enumerator.Refeicoes;
 import br.ufc.quixada.npi.sisat.service.ConsultaNutricionalService;
 import br.ufc.quixada.npi.sisat.service.PacienteService;
 import br.ufc.quixada.npi.sisat.service.PessoaService;
@@ -67,7 +66,7 @@ public class NutricaoController {
 		model.addAttribute("agendamento", new Agendamento());
 		return "nutricao/buscar";
 	}
-
+	
 	@RequestMapping(value = "/buscar", method = RequestMethod.POST)
 	public String buscarPaciente(@RequestParam("tipoPesquisa") String tipoPesquisa, @RequestParam("campo") String campo, ModelMap map, RedirectAttributes redirectAttributes) {
 		List<Pessoa> pessoas = null;
@@ -92,11 +91,11 @@ public class NutricaoController {
 		model.addAttribute("paciente", new Pessoa());
 		return "nutricao/agendar_consulta";
 	}
-	//@RequestMapping(value = {"{id}/age"}, method = RequestMethod.GET)
-	//public String agendamentoEdita(Model model, @PathVariable("id") Long id) {
-		//model.addAttribute("agendamento", serviceAgendamento.find(Agendamento.class, id));
-		//return "nutricao/agendar_consulta";
-	//}
+	@RequestMapping(value = {"{id}/age"}, method = RequestMethod.GET)
+	public String agendamentoEdita(Model model, @PathVariable("id") Long id) {
+		model.addAttribute("agendamento", serviceAgendamento.find(Agendamento.class, id));
+		return "nutricao/agendar_consulta";
+	}
 	
 	@RequestMapping(value = "/agendar_buscar", method = RequestMethod.POST)
 	public String buscarPessoa(@RequestParam("identificar") Long id, @Valid @ModelAttribute("agendamento") Agendamento agendamento, BindingResult result) {
@@ -110,6 +109,14 @@ public class NutricaoController {
 		serviceAgendamento.save(agendamento);
 		return "redirect:/nutricao/buscar";
 	}
+	
+	/*
+	@RequestMapping(value = {"/agendar"}, method = RequestMethod.POST)
+	public String agendamento(@ModelAttribute("paciente") Pessoa paciente, @ModelAttribute("agendamento") Agendamento agendamento ) {
+		System.out.println(paciente.toString());
+		return "nutricao/agendar_consulta";
+	}
+	*/
 
 	@RequestMapping(value = {"/{id}/editarAgendamento"}, method = RequestMethod.GET)
 	public String editarAgendamento(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes){
@@ -135,44 +142,27 @@ public class NutricaoController {
 		return "nutricao/detalhes";
 	}
 	
-	//=========================== Consulta Nutricional ===========================
-	//Consulta Nutricional --> Create
-	@RequestMapping(value = {"/{id}/realizar"}, method = RequestMethod.GET)
-	public String realizarConsulta(Model model, @PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-		Pessoa pessoa = pessoaService.find(Pessoa.class, id);
-		if(pessoa == null){
-			redirectAttributes.addFlashAttribute("erro", "Paciente não encontrado.");
-			return "redirect:/nutricao/buscar";
-		}
-		if(pessoa.getPaciente() == null){
-			pessoa.setPaciente(new Paciente());
-			pessoa.getPaciente().setPessoa(pessoa);
-			pessoaService.update(pessoa);
-		}
-		ConsultaNutricional consulta = new ConsultaNutricional();
-		model.addAttribute("paciente", pessoa.getPaciente());
-		model.addAttribute("consulta", consulta);
+	@RequestMapping(value = {"/consulta"}, method = RequestMethod.GET)
+	public String consulta(Model model, HttpSession session) {	
+		model.addAttribute("consulta", new ConsultaNutricional());
 		model.addAttribute("classificacao", Classificacao.values());
 		model.addAttribute("refeicoes", Refeicoes.values());
-		
 		return "nutricao/consulta";
 	}
-	
+
+	@RequestMapping(value = {"/{id}/realizar"}, method = RequestMethod.GET)
+	public void realizarConsulta(Model model, @PathVariable("id") Long id) {
+		Pessoa pessoa = pessoaService.find(Pessoa.class, id);
+		Paciente paciente = new Paciente();
+		paciente.setPessoa(pessoa);
+		pacienteService.save(paciente);
+	}
+
 	@RequestMapping(value = {"/consulta"}, method = RequestMethod.POST)
-	public String consulta(@ModelAttribute("consulta") ConsultaNutricional consulta, BindingResult result, RedirectAttributes redirectAttributes) {
+	public String consulta(@ModelAttribute("consulta") ConsultaNutricional consulta, BindingResult result) {
 		if (result.hasErrors()) {
-			System.out.println(result.toString());
-			return ("nutricao/buscar");
+			return ("/paciente/cadastrar");
 		}
-		Paciente paciente = pacienteService.find(Paciente.class, consulta.getPaciente().getId());
-		double altura = consulta.getPaciente().getAltura();
-		
-		Date data = new Date(System.currentTimeMillis());
-		consulta.setData(data);
-		
-		consulta.setPaciente(paciente);
-		consulta.getPaciente().setAltura(altura);
-		
 		if(consulta.getAgua().length()==0){
 			consulta.setAgua(null);
 		}
@@ -205,18 +195,6 @@ public class NutricaoController {
 				}
 			}
 		}
-		redirectAttributes.addFlashAttribute("success", "Consulta de <strong>id = " + consulta.getId() + "</strong> e paciente <strong>" + consulta.getPaciente().getPessoa().getNome() + "</strong> realizada com sucesso.");
-		return "redirect:/nutricao/buscar";
-	}
-	//Consulta Nutricional --> Read
-	@RequestMapping(value = {"/{id}/detalhesConsulta"})
-	public String getDetalhesConsulta(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes){
-		ConsultaNutricional consulta = consultaNutricionalService.find(ConsultaNutricional.class, id);
-		if(consulta == null){
-			redirectAttributes.addFlashAttribute("erro", "Consulta não encontrado.");
-			return "redirect:/nutricao/buscar";
-		}
-		model.addAttribute("consulta", consulta);
-		return "nutricao/detalhesConsulta";
+		return "nutricao/consulta";
 	}
 }

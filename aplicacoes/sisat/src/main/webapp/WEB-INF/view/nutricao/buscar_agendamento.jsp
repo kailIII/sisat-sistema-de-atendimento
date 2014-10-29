@@ -17,7 +17,7 @@
 	<jsp:include page="../modulos/header.jsp" />
 
 	<div class="container">
-		<div class="buscar-paciente" align="left">
+		<div class="buscar" align="left">
 
 			<c:if test="${not empty erro }">
 				<div class="alert alert-danger" role="alert">${erro}</div>
@@ -34,7 +34,7 @@
 					<option value="cpf">CPF</option>
 				</select>
 				<input id="campo" name="campo" cssClass="form-control"
-					placeholder="Digite sua busca aqui..." size="40" required="required" autofocus="true"/>
+					placeholder="Digite sua busca aqui...huuehueueuh" size="40" required="required" autofocus="true"/>
 				<button class="btn btn-primary" name="submit" type="submit" class="btn btn-primary"
 					value="Buscar" >
 					 Buscar
@@ -43,7 +43,7 @@
 				
  			</form:form>
 
-			<c:if test="${not empty pessoas}">
+			<c:if test="${not empty agendamentos}">
 				<div class="panel panel-default">
 
 					<div class="panel-heading" align="center"></div>
@@ -53,20 +53,35 @@
 						<thead>
 							<tr>
 								<th>Nome</th>
+								<th>Data</th>
+								<th>Consulta</th>
 								<th>Ações</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="pessoa" items="${pessoas}">
+							<c:forEach var="agendamento" items="${agendamentos}">
 								<tr class="linha">
-									<td><a href="<c:url value="/nutricao/${pessoa.id}/detalhes"></c:url>">${pessoa.nome}
-									</a></td>
-									<td><a id="detalhes" data-toggle="modal" href="${pessoa.id}/detalhes">
-											<button class="btn btn-info">
-												Detalhes <span class="glyphicon glyphicon-eye-open"></span>
-											</button></a>
-											<a href="/buscar.jsp#myModal" id="m" data-ident="${pessoa.id}" class="btn btn-info" data-toggle="modal">Agendar Consulta</a>
+									<td><a href="<c:url value="#"></c:url>">nome
+										</a>
 									</td>
+									<td>
+										<a href="<c:url value="#"></c:url>">
+											<fmt:formatDate type="date" value="${agendamento.data}" />
+											<fmt:formatDate type="time" value="${agendamento.hora}" />
+										</a>
+									</td>
+									<td>
+										<a href="<c:url value="#"></c:url>">
+										</a>
+									</td>
+									<td>
+										<a id="detalhes" data-toggle="modal" href="${agendamento.id}/editarAgendamento">
+											<button class="btn btn-info">
+												editar2 <span class="glyphicon glyphicon-eye-open"></span>
+											</button></a>
+										<a href="/buscar.jsp#myModal2" id="m" data-ident="${aa}" class="btn btn-info" data-toggle="modal">Editar agendamento de consulta</a>
+									</td>
+									
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -76,16 +91,17 @@
 						<div class="modal-dialog">
 							<div class="modal-content">
 				                <div class="modal-header">
-				                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				                    <h4 class="modal-title">Agendar Consulta</h4>
 				                </div>
-				                <form:form id="form" servletRelativeAction="agendar_buscar" modelAttribute="agendamento" >
+				                <form:form id="form" servletRelativeAction="agendar_buscar" method="POST" modelAttribute="agendamento" >
 				                	<input type="hidden" name="identificar" value="" >
 					                <div class="modal-body">
 					                    <div class="col-sm-12">
 											<label>Data</label><input type="text" name="data" class="data" value="">		
-											<label>Hora</label><input type="time" name="hora" value="">
+											<label>Hora</label><input type="time" name="hora"  value="">
 					                	</div>
+					                
 						                <div class="modal-footer">
 						                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 						                    <input type="submit" class="btn btn-info" value="Agendar"/>
@@ -95,6 +111,43 @@
 							</div>
 						</div>
 					</div>
+					
+					<div id="myModal2" class="modal fade">
+						<div class="modal-dialog">
+							<div class="modal-content">
+				                <div class="modal-header">
+				                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				                    <h4 class="modal-title">Editar agendamento de consulta</h4>
+				                </div>
+				                <form:form id="form" servletRelativeAction="editarAgendamento" modelAttribute="agendamento" >
+				                	<input type="hidden" name="identificar" value="" >
+					                <div class="modal-body">
+					                    <div class="col-sm-12">
+											<label>Data</label><input type="text" name="data" class="data" value="${ agendamento.data}">		
+											<label>Hora</label><input type="time" name="hora" value="${ agendamento.hora}">
+					                	
+					                		teste:
+					                		${data }
+					                		${agendamento.data}
+					                		${aa }
+					                		data:
+					                		<fmt:formatDate type="time" value="${agendamento.hora}" />
+					                	</div>
+					                		
+					                	
+						                <div class="modal-footer">
+						                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						                    <input type="submit" class="btn btn-info" value="Agendar"/>
+						                </div>
+					            	</div>
+					            </form:form>
+					            
+					           
+							</div>
+						</div>
+					</div>
+					
+					
 				</div>
 			</c:if>
 		</div>
@@ -102,7 +155,7 @@
 	
 	<jsp:include page="../modulos/footer.jsp" />
 
-<script type="text/javascript"> 
+<script type="text/java"> 
 $(document).ready(function(){
 	$("a#m").click(function(){
 		 var ident = $(this).data("ident");

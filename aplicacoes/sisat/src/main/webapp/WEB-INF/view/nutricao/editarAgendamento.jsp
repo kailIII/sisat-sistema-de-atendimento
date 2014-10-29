@@ -24,6 +24,6 @@
 				<button type="submit" class="btn btn-success">Editar</button>
 		</div>
 	</form:form>
-					            
+	
 </body>
 </html>

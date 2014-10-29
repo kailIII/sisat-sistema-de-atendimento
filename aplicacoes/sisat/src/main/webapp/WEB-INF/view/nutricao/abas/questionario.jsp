@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 
 <fieldset>
@@ -16,13 +15,14 @@
 			<div class="form-group">	
 				<label for="refeicaoAdd" class="col-sm-2 control-label">Refeicao:</label>
 				
-			<select name="refeicaoAdd" id="refeicaoAdd" class="col-xs-2">
-			  <c:forEach var="r" items="${refeicoes}">
-  						<option value="${r}">${r.nome}</option>
-				</c:forEach>
+			  <select name="refeicaoAdd" id="refeicaoAdd" class="col-xs-2">
+				  <option value="DESJEJUM">desjejum</option>
+				  <option value="LANCHEMANHA">Lanche da Manhã</option>
+				  <option value="ALMOCO">Alomoço</option>
+				  <option value="LANCHETARDE">Lanche da Tarde</option>
+				  <option value="JANTAR">Jantar</option>
+				  <option value="CEIA">Ceia</option>
 			</select>
-				
-
 			
 			</div>	
 			
@@ -53,15 +53,14 @@ $(document).ready(function() {
     $("#addFrequencia").click(function() {
     	var horaFrequencia = $("#horaAdd").val();
     	var refeicaoFrequencia = $("#refeicaoAdd").val();	
-    	var titulo = $("#refeicaoAdd [value='"+refeicaoFrequencia+"']").text();
-    	console.log("refeicaoFrequencia = " + refeicaoFrequencia);
     	if(!$('#horaAdd').val() || !$('#refeicaoAdd').val() ) {
+			//alert('Nome e email obrigatorio');		
 			return false;
 			
     	} else if(contFrequencia < 6){
 			var fieldset = $("<fieldset>");
 			var divnone = $("<div style='display:none;'>");
-			fieldset.append($("<legend>").text(horaFrequencia + ", " + titulo));
+			fieldset.append($("<legend>").text($("#horaAdd").text() + ", " + refeicaoFrequencia));
 			
 			fieldset.append($("<input type='hidden' name='frequencias["+contFrequencia+"].horario' cssClass='form-control' value="+horaFrequencia+">"));
 			fieldset.append($("<input type='hidden' name='frequencias["+contFrequencia+"].refeicao' cssClass='form-control' value="+refeicaoFrequencia+">"));
@@ -122,6 +121,10 @@ $(document).ready(function() {
 </script>
 
 <style type="text/css">
+
+
+
+
 </style>
 
 

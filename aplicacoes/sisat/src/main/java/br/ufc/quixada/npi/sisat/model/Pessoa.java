@@ -212,15 +212,12 @@ public class Pessoa {
 	}
 
 	public String toString() {
-		return "Pessoa [id=" + id + ", paciente=" + pacienteToString() + ", login="
+		return "Pessoa [id=" + id + ", paciente=" + paciente + ", login="
 				+ login + ", password=" + password + ", habilitado="
 				+ habilitado + ", papeis=" + papeis + ", servidores="
 				+ servidores + ", cpf=" + cpf + ", nome=" + nome + ", email="
 				+ email + ", sexo=" + sexo + ", dataNascimento="
 				+ dataNascimento + ", telefone=" + telefone + "]";
-	}
-	private String pacienteToString() {
-		return "Paciente [consultas=" + paciente.getConsultas() + ", altura=" + paciente.getAltura()  + "]";
 	}
 }
 
