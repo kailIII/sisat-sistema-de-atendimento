@@ -34,7 +34,7 @@
 					<option value="cpf">CPF</option>
 				</select>
 				<input id="campo" name="campo" cssClass="form-control"
-					placeholder="Digite sua busca aqui...huuehueueuh" size="40" required="required" autofocus="true"/>
+					placeholder="Digite sua busca aqui..." size="40" required="required" autofocus="true"/>
 				<button class="btn btn-primary" name="submit" type="submit" class="btn btn-primary"
 					value="Buscar" >
 					 Buscar
@@ -80,6 +80,7 @@
 												editar2 <span class="glyphicon glyphicon-eye-open"></span>
 											</button></a>
 										<a href="/buscar.jsp#myModal2" id="m" data-ident="${aa}" class="btn btn-info" data-toggle="modal">Editar agendamento de consulta</a>
+										<a href="/buscar.jsp#myModal2" id="m" data-ident="${aa}" class="delAlimento btn btn-danger glyphicon glyphicon-edit">Deletar</a>
 									</td>
 									
 								</tr>
