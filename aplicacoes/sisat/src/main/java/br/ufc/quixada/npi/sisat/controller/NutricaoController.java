@@ -134,7 +134,7 @@ public class NutricaoController {
 	}
 	
 	@RequestMapping(value = {"/deletarAgendamento"}, method = RequestMethod.POST)
-	public String deletarAgendamento(@ModelAttribute("agendamento") Agendamento agendamento, @RequestParam("id") Long id){
+	public String deletarAgendamento(@ModelAttribute("agendamento") Agendamento agendamento){
 		agendamentoService.delete(agendamento);
 		return "/nutricao/buscarAgendamento";
 	}

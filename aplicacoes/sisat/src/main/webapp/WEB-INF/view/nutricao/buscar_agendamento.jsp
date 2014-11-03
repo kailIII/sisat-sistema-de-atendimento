@@ -59,7 +59,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="agendamento" items="${agendamentos}">
+							<c:forEach var="agendamento" items="${agendamentos}" varStatus="i">
 								<tr class="linha">
 									<td><a href="<c:url value="#"></c:url>">nome
 										</a>
@@ -76,11 +76,13 @@
 									</td>
 									<td>
 										<a id="detalhes" data-toggle="modal" href="${agendamento.id}/editarAgendamento">
-											<button class="btn btn-info">
-												editar2 <span class="glyphicon glyphicon-eye-open"></span>
+											<button class="btn btn-info">editar2 <span class="glyphicon glyphicon-eye-open"></span>
 											</button></a>
 										<a href="/buscar.jsp#myModal2" id="m" data-ident="${aa}" class="btn btn-info" data-toggle="modal">Editar agendamento de consulta</a>
-										<a href="/buscar.jsp#myModal2" id="m" data-ident="${aa}" class="delAlimento btn btn-danger glyphicon glyphicon-edit">Deletar</a>
+										
+										<a href="${agendamento.id}/deletarAgendamento" id="deletar"> 
+											<button class="btn btn-danger glyphicon glyphicon-edit">Deletar</button>
+										</a>
 									</td>
 									
 								</tr>
