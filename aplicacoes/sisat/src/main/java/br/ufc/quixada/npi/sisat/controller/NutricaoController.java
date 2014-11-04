@@ -120,17 +120,17 @@ public class NutricaoController {
 	}
 	*/
 
-	@RequestMapping(value = {"/{id}/editarAgendamento"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/{id}/editar_agendamento"}, method = RequestMethod.GET)
 	public String editarAgendamento(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes){
 		Agendamento agendamento = agendamentoService.find(Agendamento.class, id);
 		model.addAttribute("agendamento", agendamento);
-		return "/nutricao/editarAgendamento";
+		return "/nutricao/buscar_agendamento";
 	}
 	
-	@RequestMapping(value = {"/editarAgendamento"}, method = RequestMethod.POST)
-	public String editarAgendamento(@ModelAttribute("agendamento") Agendamento agendamento, @RequestParam("id") Long id){
+	@RequestMapping(value = {"/editar_agendamento"}, method = RequestMethod.POST)
+	public String editarAgendamento(@ModelAttribute("agendamento") Agendamento agendamento){
 		agendamentoService.update(agendamento);
-		return "/nutricao/editarAgendamento";
+		return "/nutricao/buscar_agendamento";
 	}
 	
 	//buscar agendamento	//IsmaelRS
@@ -160,7 +160,6 @@ public class NutricaoController {
 			}
 
 		}
-		System.out.println("agendamenstos: " + agendamentos.toString());
 		map.addAttribute("agendamentos", agendamentos); 
 		return "/nutricao/buscar_agendamento";
 	}

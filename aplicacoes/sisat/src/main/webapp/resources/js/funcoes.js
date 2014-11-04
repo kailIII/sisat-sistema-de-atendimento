@@ -15,8 +15,10 @@ $(document).ready(function() {
 	  $(this).tab('show');
 	});
 	
-	$('#confirm-delete').on('show.bs.modal', function(e) {
-	    $(this).find('.btn-danger').attr('href', $(e.relatedTarget).data('href'));
+	$('#myModal').on('show.bs.modal', function(e) {
+	    console.log("add modal");
+		$(this).find('input[name=data]').attr('value', $(e.relatedTarget).data('data'));
+		$(this).find('input[name=hora]').attr('value', $(e.relatedTarget).data('hora'));
 	});
 	
 	$('#confirm-submit').on('show.bs.modal', function(e) {

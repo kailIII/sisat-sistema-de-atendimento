@@ -10,7 +10,7 @@
 <html>
 <head>
 <jsp:include page="../modulos/header-estrutura.jsp" />
-<title>Buscar paciente</title>
+<title>Buscar agendamento</title>
 </head>
 <body>
 
@@ -61,7 +61,7 @@
 						<tbody>
 							<c:forEach var="agendamento" items="${agendamentos}">
 								<tr class="linha">
-									<td><a href="<c:url value="#"></c:url>">nome
+									<td><a href="<c:url value="#"></c:url>">${agendamento.paciente.pessoa.nome}
 										</a>
 									</td>
 									<td>
@@ -75,11 +75,14 @@
 										</a>
 									</td>
 									<td>
-										<a id="detalhes" data-toggle="modal" href="${agendamento.id}/editarAgendamento">
-											<button class="btn btn-info">
-												editar2 <span class="glyphicon glyphicon-eye-open"></span>
-											</button></a>
-										<a href="/buscar.jsp#myModal2" id="m" data-ident="${aa}" class="btn btn-info" data-toggle="modal">Editar agendamento de consulta</a>
+										<a 
+										data-data="${ agendamento.data}"
+										data-hora="${ agendamento.hora}"
+										data-id="${ agendamento.id}"
+										data-status="${ agendamento.status}"
+										class="edita btn btn-info" 
+										data-toggle="modal">Editar agendamento de consulta
+										</a>
 									</td>
 									
 								</tr>
@@ -87,67 +90,41 @@
 						</tbody>
 					</table>
 					
-					<div id="myModal" class="modal fade">
-						<div class="modal-dialog">
-							<div class="modal-content">
-				                <div class="modal-header">
-				                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				                    <h4 class="modal-title">Agendar Consulta</h4>
-				                </div>
-				                <form:form id="form" servletRelativeAction="agendar_buscar" method="POST" modelAttribute="agendamento" >
-				                	<input type="hidden" name="identificar" value="" >
-					                <div class="modal-body">
-					                    <div class="col-sm-12">
-											<label>Data</label><input type="text" name="data" class="data" value="">		
-											<label>Hora</label><input type="time" name="hora"  value="">
-					                	</div>
-					                
-						                <div class="modal-footer">
-						                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						                    <input type="submit" class="btn btn-info" value="Agendar"/>
-						                </div>
-					            	</div>
-					            </form:form>
-							</div>
-						</div>
+					<div id="myModalEditar" class="modal fade">
+					    <div class="modal-dialog">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					                <h4 class="modal-title">Editar agendamento de consulta</h4>
+					            </div>
+					            <div class="modal-body">
+					                <form:form servletRelativeAction="editar_agendamento" class="form-horizontal">					                    
+					                    <input type="hidden" name="status" class="form-control" id="inputStatus">
+					                    <input type="hidden" name="id" class="form-control" id="inputId">
+					                    
+					                    <div class="form-group">
+					                        <label for="inputData" class="control-label col-xs-2">Data</label>
+					                        <div class="col-xs-10">
+					                            <input type="text" name="data" class="form-control" id="inputData" value="" placeholder="data">
+					                        </div>
+					                    </div>
+					
+					                    <div class="form-group">
+					                        <label for="inputHora" class="control-label col-xs-2">Hora</label>
+					                        <div class="col-xs-10">
+					                            <input type="time" name="hora" class="form-control" id="inputHora" value="" placeholder="hora">
+					                        </div>
+					                    </div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default"
+												data-dismiss="modal">Fechar</button>
+											<button type="submit" class="btn btn-primary">Salvar</button>
+										</div>
+									</form:form>
+					            </div>
+					        </div>
+					    </div>
 					</div>
-					
-					<div id="myModal2" class="modal fade">
-						<div class="modal-dialog">
-							<div class="modal-content">
-				                <div class="modal-header">
-				                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				                    <h4 class="modal-title">Editar agendamento de consulta</h4>
-				                </div>
-				                <form:form id="form" servletRelativeAction="editarAgendamento" modelAttribute="agendamento" >
-				                	<input type="hidden" name="identificar" value="" >
-					                <div class="modal-body">
-					                    <div class="col-sm-12">
-											<label>Data</label><input type="text" name="data" class="data" value="${ agendamento.data}">		
-											<label>Hora</label><input type="time" name="hora" value="${ agendamento.hora}">
-					                	
-					                		teste:
-					                		${data }
-					                		${agendamento.data}
-					                		${aa }
-					                		data:
-					                		<fmt:formatDate type="time" value="${agendamento.hora}" />
-					                	</div>
-					                		
-					                	
-						                <div class="modal-footer">
-						                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						                    <input type="submit" class="btn btn-info" value="Agendar"/>
-						                </div>
-					            	</div>
-					            </form:form>
-					            
-					           
-							</div>
-						</div>
-					</div>
-					
-					
 				</div>
 			</c:if>
 		</div>
@@ -155,20 +132,30 @@
 	
 	<jsp:include page="../modulos/footer.jsp" />
 
-<script type="text/java"> 
+<script type="text/javascript"> 
 $(document).ready(function(){
 	$("a#m").click(function(){
 		 var ident = $(this).data("ident");
 		 $("#form input[type='hidden']").val(ident);
 	});
 	
-	$("input.data").datepicker({
+	$("input#inputData").datepicker({
 		format : "dd/mm/yyyy",
 		todayBtn : "linked",
 		autoclose : true,
 		language : "pt-BR",
 		todayHighlight : true,
 	});
+
+    $("a.edita").on('click', function(event) {
+		console.log("testando modal");
+        $("#myModalEditar #inputId").val($(this).data('id'));
+        $("#myModalEditar #inputStatus").val($(this).data('status'));
+        $("#myModalEditar #inputData").val($(this).data('data'));
+        $("#myModalEditar #inputHora").val($(this).data('hora'));
+        $("#myModalEditar").modal('show');
+    });
+
 });
 </script>
 

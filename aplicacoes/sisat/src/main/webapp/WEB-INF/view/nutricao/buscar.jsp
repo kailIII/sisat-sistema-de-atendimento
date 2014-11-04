@@ -66,7 +66,6 @@
 												Detalhes <span class="glyphicon glyphicon-eye-open"></span>
 											</button></a>
 											<a href="/buscar.jsp#myModal" id="m" data-ident="${pessoa.id}" class="btn btn-info" data-toggle="modal">Agendar Consulta</a>
-											<a href="/buscar.jsp#myModal2" id="m" data-ident="${pessoa.id}" class="btn btn-info" data-toggle="modal">Editar agendamento de consulta</a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -86,31 +85,6 @@
 					                    <div class="col-sm-12">
 											<label>Data</label><input type="text" name="data" class="data" value="">		
 											<label>Hora</label><input type="time" name="hora" value="">
-					                	</div>
-						                <div class="modal-footer">
-						                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						                    <input type="submit" class="btn btn-info" value="Agendar"/>
-						                </div>
-					            	</div>
-					            </form:form>
-							</div>
-						</div>
-					</div>
-					
-					
-					<div id="myModal2" class="modal fade">
-						<div class="modal-dialog">
-							<div class="modal-content">
-				                <div class="modal-header">
-				                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				                    <h4 class="modal-title">Editar agendamento de consulta</h4>
-				                </div>
-				                <form:form id="form" servletRelativeAction="editarAgendamento" modelAttribute="agendamento" >
-				                	<input type="hidden" name="identificar" value="" >
-					                <div class="modal-body">
-					                    <div class="col-sm-12">
-											<label>Data</label><input type="text" name="data" class="data" value="${ agendamento.data}">		
-											<label>Hora</label><input type="time" name="hora" value="${ agendamento.hora}">
 					                	</div>
 						                <div class="modal-footer">
 						                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
