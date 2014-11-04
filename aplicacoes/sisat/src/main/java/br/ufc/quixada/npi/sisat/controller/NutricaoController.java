@@ -134,9 +134,11 @@ public class NutricaoController {
 	}
 	
 	@RequestMapping(value = {"/deletarAgendamento"}, method = RequestMethod.POST)
-	public String deletarAgendamento(@ModelAttribute("agendamento") Agendamento agendamento){
+	public String deletarAgendamento(@ModelAttribute("agendamento") Agendamento agendamento, RedirectAttributes redirectAttributes){
+		agendamento = agendamentoService.find(Agendamento.class, agendamento.getId());
 		agendamentoService.delete(agendamento);
-		return "/nutricao/buscarAgendamento";
+		redirectAttributes.addFlashAttribute("success", "Agendamento deletado com sucesso");
+		return "redirect:/nutricao/buscar_agendamento";
 	}
 	
 	//buscar agendamento	//IsmaelRS

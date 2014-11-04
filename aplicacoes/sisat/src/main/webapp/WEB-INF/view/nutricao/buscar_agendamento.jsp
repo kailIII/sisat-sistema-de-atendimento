@@ -25,6 +25,9 @@
 			<c:if test="${not empty info }">
 				<div class="alert alert-info" role="alert">${info}</div>
 			</c:if>
+			<c:if test="${not empty success }">
+				<div class="alert alert-success" role="alert">${success}</div>
+			</c:if>
 
 			<form:form id="buscarPacienteForm" role="form"
 				servletReltiveAction="/nutricao/buscar" method="POST"
@@ -75,14 +78,18 @@
 										</a>
 									</td>
 									<td>
+										<form:form servletRelativeAction="deletarAgendamento" method="POST" modelAttribute="agendamento" id="deletar">
+								
 										<a id="detalhes" data-toggle="modal" href="${agendamento.id}/editarAgendamento">
-											<button class="btn btn-info">editar2 <span class="glyphicon glyphicon-eye-open"></span>
+											<button class="btn btn-info" form="editar">editar2 <span class="glyphicon glyphicon-eye-open"></span>
 											</button></a>
 										<a href="/buscar.jsp#myModal2" id="m" data-ident="${aa}" class="btn btn-info" data-toggle="modal">Editar agendamento de consulta</a>
 										
-										<a href="${agendamento.id}/deletarAgendamento" id="deletar"> 
-											<button class="btn btn-danger glyphicon glyphicon-edit">Deletar</button>
+										<a>
+											<input type="hidden" name="id" value="${agendamento.id}">											
+											 <button type="submit" class="btn btn-danger glyphicon glyphicon-edit" form="deletar">Deletar</button> 
 										</a>
+										</form:form>
 									</td>
 									
 								</tr>
