@@ -93,11 +93,6 @@ public class NutricaoController {
 		return "nutricao/agendar_consulta";
 	}
 	
-//	@RequestMapping(value = {"{id}/age"}, method = RequestMethod.GET)
-//	public String agendamentoEdita(Model model, @PathVariable("id") Long id) {
-//		model.addAttribute("agendamento", serviceAgendamento.find(Agendamento.class, id));
-//		return "nutricao/agendar_consulta";
-//	}
 	
 	@RequestMapping(value = "/agendar_buscar", method = RequestMethod.POST)
 	public String buscarPessoa(@RequestParam("identificar") Long id, @Valid @ModelAttribute("agendamento") Agendamento agendamento, BindingResult result) {
@@ -112,13 +107,6 @@ public class NutricaoController {
 		return "redirect:/nutricao/buscar";
 	}
 	
-	/*
-	@RequestMapping(value = {"/agendar"}, method = RequestMethod.POST)
-	public String agendamento(@ModelAttribute("paciente") Pessoa paciente, @ModelAttribute("agendamento") Agendamento agendamento ) {
-		System.out.println(paciente.toString());
-		return "nutricao/agendar_consulta";
-	}
-	*/
 
 	@RequestMapping(value = {"/{id}/editarAgendamento"}, method = RequestMethod.GET)
 	public String editarAgendamento(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes){
@@ -133,6 +121,7 @@ public class NutricaoController {
 		return "/nutricao/editarAgendamento";
 	}
 	
+	//deletar agendamento //Wanrly
 	@RequestMapping(value = {"/{id}/deletarAgendamento"}, method = RequestMethod.GET)
 	public String deletarAgendamento(@PathVariable("id") Long id, RedirectAttributes redirectAttributes){
 		agendamentoService.delete(agendamentoService.find(Agendamento.class, id));
