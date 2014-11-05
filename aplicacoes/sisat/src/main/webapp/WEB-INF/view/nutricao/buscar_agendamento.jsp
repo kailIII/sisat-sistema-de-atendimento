@@ -74,23 +74,10 @@
 										</a>
 									</td>
 									<td>
-										<a href="<c:url value="#"></c:url>">
-										</a>
-									</td>
-									<td>
-										<form:form servletRelativeAction="deletarAgendamento" method="POST" modelAttribute="agendamento" id="deletar">
-								
-										<a id="detalhes" data-toggle="modal" href="${agendamento.id}/editarAgendamento">
-											<button class="btn btn-info" form="editar">editar2 <span class="glyphicon glyphicon-eye-open"></span>
-											</button></a>
-										<a href="/buscar.jsp#myModal2" id="m" data-ident="${aa}" class="btn btn-info" data-toggle="modal">Editar agendamento de consulta</a>
-										
-										<a>
-											<input type="hidden" name="id" value="${agendamento.id}">											
-											 <button type="submit" class="btn btn-danger glyphicon glyphicon-edit" form="deletar">Deletar</button> 
-										</a>
-										</form:form>
-									</td>
+									</td>									
+										<td>
+											<a href="<c:url value="${agendamento.id}/deletarAgendamento"></c:url>" class="delAlimento btn btn-danger glyphicon glyphicon-edit">Deletar</a>
+										</td>
 									
 								</tr>
 							</c:forEach>

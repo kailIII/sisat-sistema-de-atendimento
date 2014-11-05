@@ -133,10 +133,9 @@ public class NutricaoController {
 		return "/nutricao/editarAgendamento";
 	}
 	
-	@RequestMapping(value = {"/deletarAgendamento"}, method = RequestMethod.POST)
-	public String deletarAgendamento(@ModelAttribute("agendamento") Agendamento agendamento, RedirectAttributes redirectAttributes){
-		agendamento = agendamentoService.find(Agendamento.class, agendamento.getId());
-		agendamentoService.delete(agendamento);
+	@RequestMapping(value = {"/{id}/deletarAgendamento"}, method = RequestMethod.GET)
+	public String deletarAgendamento(@PathVariable("id") Long id, RedirectAttributes redirectAttributes){
+		agendamentoService.delete(agendamentoService.find(Agendamento.class, id));
 		redirectAttributes.addFlashAttribute("success", "Agendamento deletado com sucesso");
 		return "redirect:/nutricao/buscar_agendamento";
 	}
