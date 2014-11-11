@@ -101,6 +101,9 @@
 	<label>/semana</label>
 </div>	
 
+<div class="col-sm-2"><input type="checkbox" name="diabetes"/><label>Diabetes</label></div>
+<div class="col-sm-2"><input type="checkbox" name="hipertensao"/><label>Hipertensão</label></div>
+
 <div class="col-sm-12">
 	<div style="cursor: pointer;"></div> <br/>
 	<input type="checkbox" name="outrasPatologias" id="checkPatologia" onclick="habilitar();"/><label>Patologias</label>

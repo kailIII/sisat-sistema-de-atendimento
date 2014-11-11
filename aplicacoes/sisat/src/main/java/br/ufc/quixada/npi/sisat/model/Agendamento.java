@@ -30,11 +30,11 @@ public class Agendamento {
 	
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date data;
 	
 	@Temporal(TemporalType.TIME)
-	@DateTimeFormat(pattern = "HH:mm:ss")
+	@DateTimeFormat(pattern = "HH:mm")
 	private Date hora;
 	
 	private int status;

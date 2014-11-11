@@ -80,6 +80,7 @@
 										data-hora="${ agendamento.hora}"
 										data-id="${ agendamento.id}"
 										data-status="${ agendamento.status}"
+										data-status="${ agendamento.paciente}"
 										class="edita btn btn-info" 
 										data-toggle="modal">Editar agendamento de consulta
 										</a>
@@ -101,6 +102,7 @@
 					                <form:form servletRelativeAction="editar_agendamento" class="form-horizontal">					                    
 					                    <input type="hidden" name="status" class="form-control" id="inputStatus">
 					                    <input type="hidden" name="id" class="form-control" id="inputId">
+					                    <input type="hidden" name="paciente" class="form-control" id="inputPaciente">
 					                    
 					                    <div class="form-group">
 					                        <label for="inputData" class="control-label col-xs-2">Data</label>
@@ -153,6 +155,7 @@ $(document).ready(function(){
         $("#myModalEditar #inputStatus").val($(this).data('status'));
         $("#myModalEditar #inputData").val($(this).data('data'));
         $("#myModalEditar #inputHora").val($(this).data('hora'));
+        $("#myModalEditar #inputPaciente").val($(this).data('paciente'));
         $("#myModalEditar").modal('show');
     });
 

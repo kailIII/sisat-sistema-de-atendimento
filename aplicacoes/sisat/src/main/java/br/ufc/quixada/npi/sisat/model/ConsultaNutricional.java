@@ -97,9 +97,9 @@ public class ConsultaNutricional {
 	
 	private String atividadeFisicaComentario;
 
-	private Boolean diabetes;
+	private boolean diabetes;
 
-	private Boolean hipertensao;
+	private boolean hipertensao;
 
 	private boolean outrasPatologias;
 
