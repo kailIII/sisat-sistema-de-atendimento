@@ -128,7 +128,8 @@ public class NutricaoController {
 	}
 	
 	@RequestMapping(value = {"/editar_agendamento"}, method = RequestMethod.POST)
-	public String editarAgendamento(@ModelAttribute("agendamento") Agendamento agendamento){
+	public String editarAgendamento(@ModelAttribute("agendamento") Agendamento agendamento, @RequestParam("idPaciente") Long idPaciente){
+		agendamento.setPaciente(pacienteService.find(Paciente.class, idPaciente));
 		agendamentoService.update(agendamento);
 		return "/nutricao/buscar_agendamento";
 	}

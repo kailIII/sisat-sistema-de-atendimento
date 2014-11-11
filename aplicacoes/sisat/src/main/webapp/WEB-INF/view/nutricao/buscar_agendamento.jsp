@@ -34,7 +34,7 @@
 					<option value="cpf">CPF</option>
 				</select>
 				<input id="campo" name="campo" cssClass="form-control"
-					placeholder="Digite sua busca aqui...huuehueueuh" size="40" required="required" autofocus="true"/>
+					placeholder="Digite sua busca aqui" size="40" required="required" autofocus="true"/>
 				<button class="btn btn-primary" name="submit" type="submit" class="btn btn-primary"
 					value="Buscar" >
 					 Buscar
@@ -47,9 +47,9 @@
 				<div class="panel panel-default">
 
 					<div class="panel-heading" align="center"></div>
-
+					<form:form action="#" modelAttribute="agendamentos"></form:form>
 					<!-- Table -->
-					<table class="table" id="table">
+					<table class="table" id="table" >
 						<thead>
 							<tr>
 								<th>Nome</th>
@@ -71,16 +71,17 @@
 										</a>
 									</td>
 									<td>
-										<a href="<c:url value="#"></c:url>">
-										</a>
 									</td>
 									<td>
-										<a 
-										data-data="${ agendamento.data}"
-										data-hora="${ agendamento.hora}"
+									
+										<a
+										<fmt:formatDate type="date" value="${agendamento.data}" var="dataFormatada" />
+										<fmt:formatDate type="time" pattern="HH:mm" value="${agendamento.hora}" var="horaFormatada" />
+										data-data="${ dataFormatada}"
+										data-hora="${ horaFormatada}"
 										data-id="${ agendamento.id}"
 										data-status="${ agendamento.status}"
-										data-status="${ agendamento.paciente}"
+										data-paciente="${agendamento.paciente.pessoa.id}"
 										class="edita btn btn-info" 
 										data-toggle="modal">Editar agendamento de consulta
 										</a>
@@ -102,11 +103,11 @@
 					                <form:form servletRelativeAction="editar_agendamento" class="form-horizontal">					                    
 					                    <input type="hidden" name="status" class="form-control" id="inputStatus">
 					                    <input type="hidden" name="id" class="form-control" id="inputId">
-					                    <input type="hidden" name="paciente" class="form-control" id="inputPaciente">
-					                    
+					                    <input type="hidden" name="idPaciente" class="form-control" id="idPaciente">
 					                    <div class="form-group">
 					                        <label for="inputData" class="control-label col-xs-2">Data</label>
 					                        <div class="col-xs-10">
+					                        
 					                            <input type="text" name="data" class="form-control" id="inputData" value="" placeholder="data">
 					                        </div>
 					                    </div>
@@ -155,7 +156,7 @@ $(document).ready(function(){
         $("#myModalEditar #inputStatus").val($(this).data('status'));
         $("#myModalEditar #inputData").val($(this).data('data'));
         $("#myModalEditar #inputHora").val($(this).data('hora'));
-        $("#myModalEditar #inputPaciente").val($(this).data('paciente'));
+        $("#myModalEditar #idPaciente").val($(this).data('paciente'));
         $("#myModalEditar").modal('show');
     });
 

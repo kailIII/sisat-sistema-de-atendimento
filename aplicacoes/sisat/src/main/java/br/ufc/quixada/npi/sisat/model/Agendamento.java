@@ -4,6 +4,7 @@ package br.ufc.quixada.npi.sisat.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,8 +25,8 @@ public class Agendamento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne
-	@JoinColumn(name="paciente_id")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn
 	private Paciente paciente;
 	
 	@NotNull
