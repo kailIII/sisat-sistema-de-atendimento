@@ -3,13 +3,13 @@
 <div class="col-sm-12">
 	<label>Paciente</label> <br/>
 	<div class="col-sm-3">
-		<label>Altura</label><input type="text" name="altura" size="10" disabled="disabled">
+		<label>Altura</label><input type="number" name="altura" size="10" onkeypress="return digitos(event, this);" value="${paciente.altura}">
 	</div>
 	<div class="col-sm-3">
-		<label>Peso</label><input type="text" name="peso" size="10" value="${ consultaNutricional.peso }">
+		<label>Peso</label><input type="number" onkeypress="return digitos(event, this);" name="peso" size="10" value="${ consultaNutricional.peso }">
 	</div>
 	<div class="col-sm-3">
-		<label>CC</label><input type="text" name="circunferenciaCintura" size="10" value="${ consultaNutricional.circunferenciaCintura }">
+		<label>CC</label><input type="number" onkeypress="return digitos(event, this);" name="circunferenciaCintura" size="10" value="${ consultaNutricional.circunferenciaCintura }">
 	</div>
 </div>
 
@@ -41,7 +41,7 @@
 </div>
 
 <div class="col-sm-12">
-	<label>Consumo de água</label><input type="text" name="agua" size="10" value="${ consultaNutricional.agua }"> 
+	<label>Consumo de água</label><input type="number" onkeypress="return digitos(event, this);" name="agua" size="10" value="${ consultaNutricional.agua }"> 
 </div>
 
 
@@ -155,4 +155,21 @@
 			document.getElementById('inputTextPatologia').disabled = true;
 		}
 	}
+	
+	
+
+	function digitos(event){
+	  if (window.event) {
+	    // IE
+	    key = event.keyCode;
+	  } 
+	  else if (event.which) {
+	    // netscape
+	    key = event.which;
+	  }
+	  if (key != 8 || key != 13 || key < 48 || key > 57)
+	    return (((key > 47) && (key < 58)) || (key == 8 ) || (key == 13) || (key == 46));
+	    return true;
+	}
+	
 </script>

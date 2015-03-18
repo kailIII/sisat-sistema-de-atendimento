@@ -60,7 +60,7 @@
 						<tr>
 						<td><input type="hidden" name="frequencias[${ contFreq.index}].alimentos[${contAlim.index}].id" value="${ alimento.id }"></td>
 						<td><input size="50" name="frequencias[${ contFreq.index}].alimentos[${contAlim.index}].alimento" cssclass="form-control" value="${ alimento.alimento }"></td>
-						<td><input size="10" name="frequencias[${contFreq.index}].alimentos[${contAlim.index}].porcao" cssclass="form-control" value="${ alimento.porcao }"></td>
+						<td><input type="number" onkeypress="return digitos(event, this);" size="10" name="frequencias[${contFreq.index}].alimentos[${contAlim.index}].porcao" cssclass="form-control" value="${ alimento.porcao }"></td>
 
 						<td><a href="javascript:deletarLinha(${contFreq.index}, ${contAlim.index})" class="delAlimento btn btn-danger glyphicon glyphicon-edit">Deletar alimentos</a></td>
 						</tr>
@@ -124,7 +124,7 @@ $(document).ready(function() {
   		$(recipiente)
   			.append($("<tr>")
   					.append($("<td>").append($("<input size='50' name='frequencias["+frequenciaAlimentar+"].alimentos["+contAlimentos+"].alimento' cssClass='form-control'/>")))
-  					.append($("<td>").append($("<input size='10' name='frequencias["+frequenciaAlimentar+"].alimentos["+contAlimentos+"].porcao' cssClass='form-control'/>")))
+  					.append($("<td>").append($("<input size='10' type='number' onkeypress='return digitos(event, this);' name='frequencias["+frequenciaAlimentar+"].alimentos["+contAlimentos+"].porcao' cssClass='form-control'/>")))
   					.append($("<td>").append($("<a href='javascript:deletarLinha(" + frequenciaAlimentar + ", " + contAlimentos + ")' class='delAlimento btn btn-danger glyphicon glyphicon-edit'>Deletar alimentos</a>")))
   					
   			);
@@ -150,16 +150,21 @@ $(document).ready(function() {
 		}
 	}
  
+  function digitos(event){
+	  if (window.event) {
+	    // IE
+	    key = event.keyCode;
+	  } 
+	  else if (event.which) {
+	    // netscape
+	    key = event.which;
+	  }
+	  if (key != 8 || key != 13 || key < 48 || key > 57)
+	    return (((key > 47) && (key < 58)) || (key == 8 ) || (key == 13) || (key == 46));
+	    return true;
+	}
 				
 </script>
-
-<style type="text/css">
-
-
-
-
-</style>
-
 
 </html>
 
