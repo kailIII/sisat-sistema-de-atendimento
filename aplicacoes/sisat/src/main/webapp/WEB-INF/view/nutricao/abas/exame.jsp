@@ -10,7 +10,7 @@
 		
 			<!-- Glicemia -->
 			<label for="glicemia">Glicemia:</label>
-			<input id="glicemia" name="glicemia" type="text" value="${ consultaNutricional.glicemia }"/>
+			<input id="glicemia" name="glicemia" type="number" onkeypress="return digitos(event, this);" value="${ consultaNutricional.glicemia }"/>
 			
 			<select name="classificacaoGlicemia" id="classificacaoGlicemia" path="classificacaoGlicemia">
 				<c:forEach var="c" items="${classificacao}" varStatus="i">
@@ -27,7 +27,7 @@
 			
 			<!-- CT -->
 			<label for="ct">CT:</label>
-			<input id="ct" name="ct" type="text" value="${ consultaNutricional.ct}"/>
+			<input id="ct" name="ct" type="number" onkeypress="return digitos(event, this);" value="${ consultaNutricional.ct}"/>
 		
 			<select name="classificacaoCt" id="classificacaoCt" path="classificacaoCt">
 				<c:forEach var="c" items="${classificacao}" varStatus="i">
@@ -45,7 +45,7 @@
 		
 			<!-- LDL-C -->
 			<label for="ldl">LDL-C:</label>
-			<input id="ldl" name="ldl" type="text" value="${ consultaNutricional.ldl}"/>
+			<input id="ldl" name="ldl" type="number" onkeypress="return digitos(event, this);" value="${ consultaNutricional.ldl}"/>
 			
 			<select name="classificacaoLdl" id="classificacaoLdl" path="classificacaoLdl" >
 			  <c:forEach var="c" items="${classificacao}" varStatus="i">
@@ -62,7 +62,7 @@
 			
 			<!-- HDL-C -->
 			<label for="hdl"">HDL-C:</label>
-			<input id="hdl" name="hdl" type="text" value="${ consultaNutricional.hdl}"/>
+			<input id="hdl" name="hdl" type="number" onkeypress="return digitos(event, this);" value="${ consultaNutricional.hdl}"/>
 			
 			<select name="classificacaoHdl" id="classificacaoHdl" path="classificacaoHdl" >
 			  <c:forEach var="c" items="${classificacao}" varStatus="i">
@@ -85,7 +85,7 @@
 			 
 			 <!-- TG -->
 			<label for="tg">TG:</label>
-			<input id="tg" name="tg" type="text" value="${ consultaNutricional.tg}"/>
+			<input id="tg" name="tg" type="number" onkeypress="return digitos(event, this);" value="${ consultaNutricional.tg}"/>
 			
 			<select name="classificacaoTg" id="classificacaoTg" path="classificacaoTg" >
 				
@@ -103,7 +103,7 @@
 			
 			<!-- HB -->
 			<label for="hb">HB:</label>
-			<input id="hb" name="hb" type="text" value="${ consultaNutricional.hb}"/>
+			<input id="hb" name="hb" type="number" onkeypress="return digitos(event, this);" value="${ consultaNutricional.hb}"/>
 			
 			<select name="classificacaoHb" id="classificacaoHb" path="classificacaoHb" >
 			  <c:forEach var="c" items="${classificacao}" varStatus="i">
@@ -120,7 +120,7 @@
 			
 			<!-- TGO(AST) -->
 			<label for="tgo">TGO (AST):</label>
-			<input id="tgo" name="tgo" type="text" value="${ consultaNutricional.tgo}"/>
+			<input id="tgo" name="tgo" type="number" onkeypress="return digitos(event, this);" value="${ consultaNutricional.tgo}"/>
 			
 			<select name="classificacaoTgo" id="classificacaoTgo" path="classificacaoTgo" >
 				 <c:forEach var="c" items="${classificacao}" varStatus="i">
@@ -137,7 +137,7 @@
 			
 			<!-- TGP(ALT) -->
 			<label for="tgp">TGP (ALT):</label>
-			<input id="tgp" name="tgp" type="text" value="${ consultaNutricional.tgp}"/>
+			<input id="tgp" name="tgp" type="number" onkeypress="return digitos(event, this);" value="${ consultaNutricional.tgp}"/>
 			
 			<select name="classificacaoTgp" id="classificacaoTgp" path="classificacaoTgp" >
 			  <c:forEach var="c" items="${classificacao}" varStatus="i">
@@ -157,3 +157,20 @@
 	</div>
 	
 </div>
+
+<script type="text/javascript">
+function digitos(event){
+	  if (window.event) {
+	    // IE
+	    key = event.keyCode;
+	  } 
+	  else if (event.which) {
+	    // netscape
+	    key = event.which;
+	  }
+	  if (key != 8 || key != 13 || key < 48 || key > 57)
+	    return (((key > 47) && (key < 58)) || (key == 8 ) || (key == 13) || (key == 46));
+	    return true;
+	}
+	
+</script>
